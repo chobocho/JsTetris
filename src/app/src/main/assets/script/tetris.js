@@ -23,7 +23,7 @@ class Tetris {
     this.height = height;
 
     this.board = new TetrisBoard(width, height);
-    this.socre = new Score();
+    this.score = new Score();
 
     this.initState = new InitState();
     this.idleState = new IdleState();
@@ -36,9 +36,9 @@ class Tetris {
   }
 
   init() {
-    this.setState(this.idleState);
     this.board.init();
     this.score.init();
+    this.setState(this.idleState);
   }
 
   register(observer) {
@@ -62,7 +62,11 @@ class Tetris {
   }
 
   moveDown() {
-    this.state.moveDown();
+    if (this.state.gameOver()) {
+      this.setState(this.gameoverState);
+    } else {
+      this.state.moveDown();
+    }
   }
 
   moveBottom() {

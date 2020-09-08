@@ -21,26 +21,22 @@ class Tetrominos {
   }
 
   moveLeft() {
-    if (this.x == 0) {
-      return false;
-    }
     this.x--;
     return true;
   }
 
   moveRight() {
-    if (this.x == (this.board_width - 1)) {
-      return false;
-    }
     this.x++;
     return true;
   }
 
   moveDown() {
-    if (this.y == (this.board_height - 1)) {
-      return false;
-    }
     this.y++;
+    return true;
+  }
+
+  moveUp() {
+    this.y--;
     return true;
   }
 }
@@ -49,6 +45,24 @@ class EmptyBlock extends Tetrominos {
   constructor(bw, bh) {
     super(bw, bh);
     this.type = -1;
+  }
+}
+
+class OBlock extends Tetrominos {
+  constructor(bw, bh) {
+    super(bw, bh);
+    this.block = [[[1, 1], [1, 1]]];
+    this.x = 4;
+    this.y = 0;
+    this.r = 0;
+    this.w = 2;
+    this.h = 2;
+    this.type = 1;
+    this.numOfBlockType = 1;
+  }
+
+  rotate() {
+    this.r = 0;
   }
 }
 
@@ -64,5 +78,159 @@ class IBlock extends Tetrominos {
     this.h = 4;
     this.type = 2;
     this.numOfBlockType = 2;
+  }
+}
+
+class LBlock extends Tetrominos {
+  constructor(bw, bh) {
+    super(bw, bh);
+    this.block = [
+      [[1, 0, 0], 
+       [1, 0, 0], 
+       [1, 1, 0]],
+      [[1, 1, 1], 
+       [1, 0, 0], 
+       [0, 0, 0]],
+      [[1, 1, 0], 
+       [0, 1, 0], 
+       [0, 1, 0]],
+      [[0, 0, 0], 
+       [0, 0, 1], 
+       [1, 1, 1]],
+];
+    this.x = 4;
+    this.y = 0;
+    this.r = 0;
+    this.w = 3;
+    this.h = 3;
+    this.type = 3;
+    this.numOfBlockType = 4;
+  }
+}
+
+class JBlock extends Tetrominos {
+  constructor(bw, bh) {
+    super(bw, bh);
+    this.block = [
+      [[0, 1, 0], 
+       [0, 1, 0], 
+       [1, 1, 0]],
+      [[1, 0, 0], 
+       [1, 1, 1], 
+       [0, 0, 0]],
+      [[1, 1, 0], 
+       [1, 0, 0], 
+       [1, 0, 0]],
+      [[1, 1, 1], 
+       [0, 0, 1], 
+       [0, 0, 0]],
+];
+    this.x = 4;
+    this.y = 0;
+    this.r = 0;
+    this.w = 3;
+    this.h = 3;
+    this.type = 4;
+    this.numOfBlockType = 4;
+  }
+}
+
+class TBlock extends Tetrominos {
+  constructor(bw, bh) {
+    super(bw, bh);
+    this.block = [
+      [[1, 0, 0], 
+       [1, 1, 0], 
+       [1, 0, 0]],
+      [[1, 1, 1], 
+       [0, 1, 0], 
+       [0, 0, 0]],
+      [[0, 1, 0], 
+       [1, 1, 0], 
+       [0, 1, 0]],
+      [[0, 1, 0], 
+       [1, 1, 1], 
+       [0, 0, 0]],
+];
+    this.x = 4;
+    this.y = 0;
+    this.r = 0;
+    this.w = 3;
+    this.h = 3;
+    this.type = 5;
+    this.numOfBlockType = 4;
+  }
+}
+
+class SBlock extends Tetrominos {
+  constructor(bw, bh) {
+    super(bw, bh);
+    this.block = [
+      [[0, 1, 1], 
+       [1, 1, 0], 
+       [0, 0, 0]],
+      [[1, 0, 0], 
+       [1, 1, 0], 
+       [0, 1, 0]]
+];
+    this.x = 4;
+    this.y = 0;
+    this.r = 0;
+    this.w = 3;
+    this.h = 3;
+    this.type = 6;
+    this.numOfBlockType = 2;
+  }
+}
+
+class ZBlock extends Tetrominos {
+  constructor(bw, bh) {
+    super(bw, bh);
+    this.block = [
+      [[1, 1, 0], 
+       [0, 1, 1], 
+       [0, 0, 0]],
+      [[0, 1, 0], 
+       [1, 1, 0], 
+       [1, 0, 0]]
+];
+    this.x = 4;
+    this.y = 0;
+    this.r = 0;
+    this.w = 3;
+    this.h = 3;
+    this.type = 7;
+    this.numOfBlockType = 2;
+  }
+}
+
+class TetrominosFactory {
+  constructor () {
+  }
+  
+  create() {
+     return this.__create (Math.floor(Math.random()*7)+1);
+  }
+
+  __create(type) {
+      switch(type) {
+              case 1:
+                  return new OBlock();
+              case 2:
+                  return new IBlock();
+              case 3:
+                  return new LBlock();
+              case 4:
+                  return new JBlock();
+              case 5:
+                  return new TBlock();
+              case 6:
+                  return new SBlock();
+              case 7:
+                  return new ZBlock();
+              default:
+                  console.log("Tetrominos Create Error! Never come to here!");
+                  return new ITetrominos();
+      }
   }
 }

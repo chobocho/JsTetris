@@ -67,6 +67,7 @@ function processEvent(code) {
     tetris = new Tetris(board_width, board_height);
     drawEngine = new DrawEngine(tetris);
     gameEngine = new GameEngine(tetris);
+    tetris.init();
   
     canvas.addEventListener("mousedown", mouseListener);
     canvas.addEventListener("mousemove", mouseListener);
@@ -108,6 +109,7 @@ function processEvent(code) {
   }
   
   function OnDraw() {
+    gameEngine.tick();
     drawEngine.OnDraw();
   }
   

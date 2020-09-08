@@ -4,7 +4,7 @@ function test_Tetrominos() {
 }
 
 function test_Tetris() {
-  let tetris = new Tetris(board_height, board_height);
+  let tetris = new Tetris(board_width, board_height);
 
   let observer = new Observer();
   tetris.register(observer);
@@ -18,8 +18,11 @@ function test_Score() {
 }
 
 function test_TetrisBoard() {
-  board = new TetrisBoard(board_height, board_height);
+  board = new TetrisBoard(board_width, board_height);
   board.init();
+
+  block = new IBlock(board_width, board_height);
+  console.assert(board.isAcceptable(block) == true, "Error");
 }
 
 function test_State() {
