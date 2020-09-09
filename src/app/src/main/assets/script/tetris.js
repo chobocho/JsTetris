@@ -27,7 +27,7 @@ class Tetris {
 
     this.initState = new InitState();
     this.idleState = new IdleState();
-    this.playState = new PlayState(this, this.board);
+    this.playState = new PlayState(this, this.board, this.score);
     this.pauseState = new PauseState();
     this.gameoverState = new GameOverState();
 
@@ -108,6 +108,14 @@ class Tetris {
 
   getBoard() {
     return this.board.get();
+  }
+
+  getScore() {
+    return this.score.get();
+  }
+
+  getHighScore() {
+    return this.score.getHighScore();
   }
 }
 

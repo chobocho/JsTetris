@@ -96,7 +96,7 @@ class IdleState extends State {
 }
 
 class PlayState extends State {
-    constructor(tetris, board) {
+    constructor(tetris, board, score) {
         super(tetris);
         this.state = 2;
         this.blockFactory = new TetrominosFactory();
@@ -104,6 +104,7 @@ class PlayState extends State {
         this.nextBlock = this.blockFactory.create();
         this.holdBlock = this.blockFactory.getEmptyBlock();
         this.tetrisBoard = board;
+        this.score = score;
     }
 
     isPlayState() {
@@ -183,8 +184,10 @@ class PlayState extends State {
 
     updateBoard() {
         let removedLine = this.tetrisBoard.arrange();
-        //let point = calculatorScore(removedLine);
-        //tetris.addSore(point);
+        if (removedLine == 0) {
+            return;
+        }
+        this.score.increase(removedLine);
     }
 
     updateBlock() {

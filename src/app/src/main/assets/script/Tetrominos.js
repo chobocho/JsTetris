@@ -22,22 +22,18 @@ class Tetrominos {
 
   moveLeft() {
     this.x--;
-    return true;
   }
 
   moveRight() {
     this.x++;
-    return true;
   }
 
   moveDown() {
     this.y++;
-    return true;
   }
 
   moveUp() {
     this.y--;
-    return true;
   }
 }
 

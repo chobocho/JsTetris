@@ -70,6 +70,7 @@ class PlayDrawEngine extends PlayGameState {
     this.__drawNextBlock(canvas, tetris.getNextBlock(), block_image);
     this.__drawHoldBlock(canvas, tetris.getHoldBlock(), block_image);
     this.__drawKeypad(canvas, button_image);
+    this.__drawScore(canvas, button_image, tetris.getScore(), tetris.getHighScore());
   }
 
   __drawCurrentBlock(canvas_, block, block_image) {
@@ -90,7 +91,7 @@ class PlayDrawEngine extends PlayGameState {
 
     let small_block_size = blockSize * 0.7;
     let startX = (board_width + 2) * blockSize;
-    let startY = 2 * blockSize + small_block_size;
+    let startY = blockSize + small_block_size;
 
     for (var y = 0; y < block.h; ++y) {
       for (var x = 0; x < block.w; ++x) {
@@ -104,7 +105,7 @@ class PlayDrawEngine extends PlayGameState {
   __drawHoldBlock(canvas_, block, block_image) {
     let _canvas = canvas_;
     let startX = (board_width + 2) * blockSize;
-    let startY = 8 * blockSize;
+    let startY = 7.5 * blockSize;
     for (var y = 0; y < block.h; ++y) {
       for (var x = 0; x < block.w; ++x) {
         if (block.block[block.r][y][x] != 0) {
@@ -121,6 +122,29 @@ class PlayDrawEngine extends PlayGameState {
     this.buttons.forEach(e => {
       _canvas.drawImage(button_image[e.name], e.x1, e.y1, e.x2-e.x1, e.y2-e.y1);
     });
+    _canvas.closePath();
+  }
+
+  __drawScore(canvas_, button_image, score, high_score) {
+    let code = new Array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+    let _canvas = canvas_;
+    _canvas.beginPath();
+    let pos = 14;
+
+    _canvas.drawImage(button_image[code[score%10]], blockSize * pos, blockSize * 12, blockSize, blockSize);
+    while (score > 0) {
+      _canvas.drawImage(button_image[code[score%10]], blockSize * pos, blockSize * 12, blockSize, blockSize);
+      score = Math.floor(score / 10);
+      pos--;
+    }
+
+    pos = 14;
+    _canvas.drawImage(button_image[code[high_score%10]], blockSize * pos, blockSize * 15, blockSize, blockSize);
+    while (high_score > 0) {
+      _canvas.drawImage(button_image[code[high_score%10]], blockSize * pos, blockSize * 15, blockSize, blockSize);
+      high_score = Math.floor(high_score / 10);
+      pos--;
+    }
     _canvas.closePath();
   }
 }
@@ -212,6 +236,17 @@ class DrawEngine extends Observer {
     this.start_image = LoadImage("img/start.png");
     this.gameover_image = LoadImage("img/gameover.png");
 
+    this.n0 = LoadImage("img/sn00.png");
+    this.n1 = LoadImage("img/sn01.png");
+    this.n2 = LoadImage("img/sn02.png");
+    this.n3 = LoadImage("img/sn03.png");
+    this.n4 = LoadImage("img/sn04.png");
+    this.n5 = LoadImage("img/sn05.png");
+    this.n6 = LoadImage("img/sn06.png");
+    this.n7 = LoadImage("img/sn07.png");
+    this.n8 = LoadImage("img/sn08.png");
+    this.n9 = LoadImage("img/sn09.png");
+
     this.buttonImage = {};
     this.buttonImage['left'] = this.left_image;
     this.buttonImage['right'] = this.right_image;
@@ -231,6 +266,17 @@ class DrawEngine extends Observer {
 
     this.buttonImage['start'] = this.start_image;
     this.buttonImage['gameover'] = this.gameover_image;
+    
+    this.buttonImage['0'] = this.n0;
+    this.buttonImage['1'] = this.n1;
+    this.buttonImage['2'] = this.n2;
+    this.buttonImage['3'] = this.n3;
+    this.buttonImage['4'] = this.n4;
+    this.buttonImage['5'] = this.n5;
+    this.buttonImage['6'] = this.n6;
+    this.buttonImage['7'] = this.n7;
+    this.buttonImage['8'] = this.n8;
+    this.buttonImage['9'] = this.n9;
 
     this.back_block = LoadImage("img/black.png");
     this.blue_block = LoadImage("img/blue.png");
@@ -276,8 +322,11 @@ class DrawEngine extends Observer {
     this.buttons.push(new Button('up', 0, btn_w * 3, blockSize * (board_height + 4), image_size, image_size, 0.3));
     this.buttons.push(new Button('bottom', 0, btn_w, blockSize * (board_height + 1), image_size, image_size, 0.3));
 
-    this.buttons.push(new Button('next', 0, blockSize * 11, blockSize * 1, blockSize*4, blockSize, 1.0));
+    this.buttons.push(new Button('next',  0, blockSize * 11, 0, blockSize*4, blockSize, 1.0));
+    this.buttons.push(new Button('blank', 0, blockSize * 11, blockSize * 1, blockSize*4, blockSize*4, 0.5));
     this.buttons.push(new Button('hold_text', 0, blockSize * 11, blockSize * 6, blockSize*4, blockSize, 1.0));
+    this.buttons.push(new Button('blank', 0, blockSize * 11, blockSize * 7, blockSize*4, blockSize*3, 0.5));
+
     this.buttons.push(new Button('score', 0, blockSize * 11, blockSize * 11, blockSize*4, blockSize, 1.0));
     this.buttons.push(new Button('blank', 0, blockSize * 11, blockSize * 12, blockSize*4, blockSize, 0.5));
     this.buttons.push(new Button('high_score', 0, blockSize * 11, blockSize * 14, blockSize*4, blockSize, 1.0));
