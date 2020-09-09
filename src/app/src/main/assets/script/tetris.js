@@ -102,7 +102,8 @@ class Tetris {
   isPauseState() { return this.state.isPauseState(); }
 
   getCurrentBlock() { return this.state.getCurrentBlock(); }
-  getNextBlock() { return this.State.getNextBlock(); }
+  getNextBlock() { return this.state.getNextBlock(); }
+  getHoldBlock() { return this.state.getHoldBlock(); }
   getShadowBlock() { return this.state.getShodowBlock(); }
 
   getBoard() {

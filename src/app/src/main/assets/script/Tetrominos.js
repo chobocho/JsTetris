@@ -44,7 +44,7 @@ class Tetrominos {
 class EmptyBlock extends Tetrominos {
   constructor(bw, bh) {
     super(bw, bh);
-    this.type = -1;
+    this.type = 0;
   }
 }
 
@@ -211,7 +211,6 @@ class TetrominosFactory {
   create() {
      return this.__create (Math.floor(Math.random()*7)+1);
   }
-
   __create(type) {
       switch(type) {
               case 1:
@@ -232,5 +231,9 @@ class TetrominosFactory {
                   console.log("Tetrominos Create Error! Never come to here!");
                   return new ITetrominos();
       }
+  }
+
+  getEmptyBlock() {
+    return new EmptyBlock();
   }
 }

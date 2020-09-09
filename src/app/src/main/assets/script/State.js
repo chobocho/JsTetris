@@ -57,6 +57,10 @@ class State {
         return new EmptyBlock(0, 0);
     }
 
+    getHoldBlock() {
+        return new EmptyBlock(0, 0);
+    }
+
     getShodowBlock() {
         return new EmptyBlock(0, 0);
     }
@@ -98,7 +102,7 @@ class PlayState extends State {
         this.blockFactory = new TetrominosFactory();
         this.currentBlock = this.blockFactory.create();
         this.nextBlock = this.blockFactory.create();
-        this.holdBlock = null;
+        this.holdBlock = this.blockFactory.getEmptyBlock();
         this.tetrisBoard = board;
     }
 
@@ -111,7 +115,24 @@ class PlayState extends State {
     }
 
     hold() {
-        // Todo
+        if (this.holdBlock.type == 0) {
+            this.holdBlock = this.currentBlock;
+            this.updateBlock();
+            return true;
+        }
+
+        let tmpBlock = this.currentBlock;
+        this.currentBlock = this.holdBlock;
+        this.currentBlock.x = tmpBlock.x;
+        this.currentBlock.y = tmpBlock.y;
+        if (this.tetrisBoard.isAcceptable(this.currentBlock)) {
+            this.holdBlock = tmpBlock;
+            console.log("Hold");
+        } else {
+            this.currentBlock = tmpBlock;
+            console.log("UnHold");
+        }
+
         return true;
     }
 
@@ -180,7 +201,11 @@ class PlayState extends State {
     }
 
     getNextBlock() {
-        return new EmptyBlock(0, 0);
+        return this.nextBlock;
+    }
+
+    getHoldBlock() {
+        return this.holdBlock;
     }
 
     getShodowBlock() {
@@ -211,7 +236,7 @@ class GameState {
     constructor() {
     }
 
-    OnDraw(canvas, block, block_image, button_image) {
+    OnDraw(canvas, tetris, block_image, button_image) {
 
     }
   }
