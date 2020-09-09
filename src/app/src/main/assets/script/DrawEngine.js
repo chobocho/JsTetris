@@ -70,7 +70,6 @@ class PlayDrawEngine extends PlayGameState {
     this.__drawNextBlock(canvas, tetris.getNextBlock(), block_image);
     this.__drawHoldBlock(canvas, tetris.getHoldBlock(), block_image);
     this.__drawKeypad(canvas, button_image);
-    this.__drawScore(canvas, button_image, tetris.getScore(), tetris.getHighScore());
   }
 
   __drawCurrentBlock(canvas_, block, block_image) {
@@ -124,29 +123,6 @@ class PlayDrawEngine extends PlayGameState {
     });
     _canvas.closePath();
   }
-
-  __drawScore(canvas_, button_image, score, high_score) {
-    let code = new Array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
-    let _canvas = canvas_;
-    _canvas.beginPath();
-    let pos = 14;
-
-    _canvas.drawImage(button_image[code[score%10]], blockSize * pos, blockSize * 12, blockSize, blockSize);
-    while (score > 0) {
-      _canvas.drawImage(button_image[code[score%10]], blockSize * pos, blockSize * 12, blockSize, blockSize);
-      score = Math.floor(score / 10);
-      pos--;
-    }
-
-    pos = 14;
-    _canvas.drawImage(button_image[code[high_score%10]], blockSize * pos, blockSize * 15, blockSize, blockSize);
-    while (high_score > 0) {
-      _canvas.drawImage(button_image[code[high_score%10]], blockSize * pos, blockSize * 15, blockSize, blockSize);
-      high_score = Math.floor(high_score / 10);
-      pos--;
-    }
-    _canvas.closePath();
-  }
 }
 
 class PauseDrawEngine extends PauseGameState {
@@ -187,7 +163,7 @@ class GameoverDrawEngine extends GameoverGameState {
 
     this.buttons = new Array();
     this.buttons.push(new Button('play', 83, btn_w * 3, blockSize * (board_height + 1), image_size, image_size, 1.0));
-    this.buttons.push(new Button('start', 83, blockSize * 2, blockSize * 5, blockSize*6, blockSize*2, 1.0));
+    this.buttons.push(new Button('gameover', 83, blockSize * 2, blockSize * 5, blockSize*6, blockSize*2, 1.0));
   }
 
   OnDraw(canvas, tetris, block_image, button_image) {
@@ -374,11 +350,34 @@ class DrawEngine extends Observer {
     bufCtx.stroke();
   }
 
+  __drawScore(canvas_, button_image, score, high_score) {
+    let code = new Array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
+    let _canvas = canvas_;
+    _canvas.beginPath();
+    let pos = 14;
+
+    _canvas.drawImage(button_image[code[score%10]], blockSize * pos, blockSize * 12, blockSize, blockSize);
+    while (score > 0) {
+      _canvas.drawImage(button_image[code[score%10]], blockSize * pos, blockSize * 12, blockSize, blockSize);
+      score = Math.floor(score / 10);
+      pos--;
+    }
+
+    pos = 14;
+    _canvas.drawImage(button_image[code[high_score%10]], blockSize * pos, blockSize * 15, blockSize, blockSize);
+    while (high_score > 0) {
+      _canvas.drawImage(button_image[code[high_score%10]], blockSize * pos, blockSize * 15, blockSize, blockSize);
+      high_score = Math.floor(high_score / 10);
+      pos--;
+    }
+    _canvas.closePath();
+  }
+
   __drawBoard() {
     this.__drawBackGround();
     this.__drawKeypad();
     this.state.OnDraw(bufCtx, this.tetris, this.block_image, this.buttonImage);
-
+    this.__drawScore(bufCtx, this.buttonImage, tetris.getScore(), tetris.getHighScore());
     cvs.clearRect(0, 0, canvas.width, canvas.height);
     cvs.drawImage(bufCanvas, 0, 0);
   }

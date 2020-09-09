@@ -70,7 +70,11 @@ class Tetris {
   }
 
   moveBottom() {
-    this.state.moveBottom();
+    if (this.state.gameOver()) {
+      this.setState(this.gameoverState);
+    } else {
+       this.state.moveBottom();
+    }
   }
 
   rotate() {

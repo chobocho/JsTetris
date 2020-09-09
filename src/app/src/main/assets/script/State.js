@@ -29,6 +29,7 @@ class State {
 
     moveDown() {
         // TODO implement here
+        return false;
     }
 
     fixCurrentBlock() {
@@ -163,16 +164,21 @@ class PlayState extends State {
 
         if (this.tetrisBoard.isAcceptable(this.currentBlock)) {
             console.log("Accept");
-        } else {
-            this.currentBlock.moveUp();
-            console.log("Can not move down");
-            this.fixCurrentBlock();
-            this.updateBoard();
-            this.updateBlock() ;
+            return true;
         }
+
+        this.currentBlock.moveUp();
+        console.log("Can not move down");
+        this.fixCurrentBlock();
+        this.updateBoard();
+        this.updateBlock();
+        return false;
     }
 
     moveBottom() {
+        if (!this.moveDown()) {
+            return;
+        }
         while(this.tetrisBoard.isAcceptable(this.currentBlock)) {
             this.currentBlock.moveDown();
         }
