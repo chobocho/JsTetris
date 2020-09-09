@@ -29,6 +29,7 @@ class IdleDrawEngine extends IdleGameState {
 
     this.buttons = new Array();
     this.buttons.push(new Button('play', 83, btn_w * 3, blockSize * (board_height + 1), image_size, image_size, 1.0));
+    this.buttons.push(new Button('start', 83, blockSize * 2, blockSize * 5, blockSize*6, blockSize*2, 1.0));
   }
 
   OnDraw(canvas, tetris, block_image, button_image) {
@@ -134,6 +135,7 @@ class PauseDrawEngine extends PauseGameState {
 
     this.buttons = new Array();
     this.buttons.push(new Button('play', 83, btn_w * 3, blockSize * (board_height + 1), image_size, image_size, 1.0));
+    this.buttons.push(new Button('start', 83, blockSize * 2, blockSize * 5, blockSize*6, blockSize*2, 1.0));
   }
 
   OnDraw(canvas, tetris, block_image, button_image) {
@@ -161,6 +163,7 @@ class GameoverDrawEngine extends GameoverGameState {
 
     this.buttons = new Array();
     this.buttons.push(new Button('play', 83, btn_w * 3, blockSize * (board_height + 1), image_size, image_size, 1.0));
+    this.buttons.push(new Button('start', 83, blockSize * 2, blockSize * 5, blockSize*6, blockSize*2, 1.0));
   }
 
   OnDraw(canvas, tetris, block_image, button_image) {
@@ -206,6 +209,9 @@ class DrawEngine extends Observer {
     this.score_image = LoadImage("img/score.png");
     this.high_score_image = LoadImage("img/high_score.png");
 
+    this.start_image = LoadImage("img/start.png");
+    this.gameover_image = LoadImage("img/gameover.png");
+
     this.buttonImage = {};
     this.buttonImage['left'] = this.left_image;
     this.buttonImage['right'] = this.right_image;
@@ -222,6 +228,9 @@ class DrawEngine extends Observer {
     this.buttonImage['hold_text'] = this.hold_text_image;
     this.buttonImage['score'] = this.score_image;
     this.buttonImage['high_score'] = this.high_score_image;
+
+    this.buttonImage['start'] = this.start_image;
+    this.buttonImage['gameover'] = this.gameover_image;
 
     this.back_block = LoadImage("img/black.png");
     this.blue_block = LoadImage("img/blue.png");
