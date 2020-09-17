@@ -80,7 +80,7 @@ function processEvent(code) {
   function InitCanvas() {
     height = window.innerHeight;
     width = window.innerWidth;
-  
+
     if (height == 0 || width == 0) {
       console.log("Error: width == 0");
       width = 412;
@@ -105,6 +105,7 @@ function processEvent(code) {
     block_size_w = height / (board_height + 7);
     block_size_h = width / (board_width + 6);
     blockSize = block_size_w < block_size_h ? block_size_w : block_size_h;
+    startX = (canvas.width - (board_width + 6) * blockSize)/2;
     console.log(blockSize);
   }
   

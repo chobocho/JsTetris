@@ -7,6 +7,7 @@ let bufCtx;
 let blockSize = 40;
 let board_height = 18;
 let board_width = 10;
+let startX = 0;
 let tetris;
 let drawEngine;
 
