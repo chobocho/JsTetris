@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 31
     buildToolsVersion "29.0.3"
 
     def versionPropsFile = file('versioninfo.properties')
@@ -43,7 +43,7 @@ android {
 
     def date = new Date();
     def alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    def thisYear =  alphabet.charAt(date.getYear() + 1900 - 2001)
+    def thisYear =  alphabet.charAt(date.getYear() + 1900 - 2021)
     def thisMonth = alphabet.charAt(date.getMonth())
     def monthVersion = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(monthVersionCount)
 
@@ -54,7 +54,7 @@ android {
     defaultConfig {
         applicationId "com.chobocho.jstetris"
         minSdkVersion 26
-        targetSdkVersion 29
+        targetSdkVersion 31
         versionCode releaseVersionCode
         versionName "${versionHeader}.${thisYear}${thisMonth}${monthVersion}.${buildCount}"
         setProperty("archivesBaseName", "jsTetris_$versionName")
