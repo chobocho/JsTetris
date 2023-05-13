@@ -29,7 +29,7 @@ function processEvent(code) {
       break;
     case 40:
       console.log("Down");
-      gameEngine.moveBottom();
+      gameEngine.moveDown();
       break;
     case 65:
       if (tetris.isInitState()) {
